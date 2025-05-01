@@ -11,11 +11,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
-      - run: npm install
-      - run: npm run lint
-      - run: npm test
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+
+      - name: Install NPM
+        run: npm install
+        
+      - name: Lint
+        run: npm run lint
+        
+      - name: Run tests
+        run: npm test
